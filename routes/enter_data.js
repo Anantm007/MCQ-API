@@ -1,8 +1,6 @@
 const mcq = require('../models/mcqs');
 
 module.exports = (req, res) => {
-
-  console.log(req.body);
     if(req.body.question && req.body.answer && req.body.option1 && req.body.option2 && req.body.option3){
         let newQues = new mcq({
             question: req.body.question,
@@ -11,8 +9,6 @@ module.exports = (req, res) => {
             option2: req.body.option2,
             option3: req.body.option3,
         })
-
-        console.log(newQues);
 
         newQues.save( (err, data) => {
             if(err){
@@ -29,7 +25,8 @@ module.exports = (req, res) => {
     }
     else{
         res.json({
-            success: false
+            success: false,
+            msg: "Please fill all the details."
         })
     }
 }

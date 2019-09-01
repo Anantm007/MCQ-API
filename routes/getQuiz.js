@@ -12,9 +12,8 @@ module.exports = (req, res) =>{
                 msg: "Please enter data first",
             })
         } else{
-
-          res.send(data);
-
+            res.send(data);
+        
         }
     })
 }
