@@ -1,35 +1,31 @@
-const mcqs = require('../models/mcqs');
+const mcqs = require("../models/mcqs");
 
 module.exports = (req, res) => {
   console.log(req.body);
-    if(!req.params.id){
+  if (!req.params.id) {
+    res.json({
+      success: false,
+      msg: "Please enter id",
+    });
+  } else {
+    mcqs.findOne({ _id: req.params.id }, (err, data) => {
+      if (err) {
         res.json({
-            success: false,
-            msg: "Please enter id"
-        })
-    } else{
-        mcqs.findOne({_id:req.params.id}, (err, data)=>{
-            if(err){
-                res.json({
-                    success: false,
-                    msg: "Error"
-                })
-            } else{
-              var score = 0;
+          success: false,
+          msg: "Error",
+        });
+      } else {
+        var score = 0;
 
-              if(req.body.answer === data.answer)
-              {
-                    score+=1;
-              }
+        if (req.body.answer === data.answer) {
+          score += 1;
+        } else score = 0;
 
-              else
-              score = 0;
-
-                res.json({
-                    success: true,
-                    score
-                })
-            }
-        })
-    }
-}
+        res.json({
+          success: true,
+          score,
+        });
+      }
+    });
+  }
+};
